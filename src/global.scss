@@ -1,0 +1,442 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import 'leaflet/dist/leaflet.css';
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import '@ionic/angular/css/palettes/dark.system.css';
+
+/* TEMA OSCURO GLOBAL - EXPLORARD */
+
+body.tema-oscuro {
+  --explorard-fondo: #111827;
+  --explorard-fondo-secundario: #1f2937;
+  --explorard-card: #1f2937;
+  --explorard-borde: #374151;
+  --explorard-texto: #f9fafb;
+  --explorard-texto-secundario: #aab4c3;
+  --explorard-azul: #0b1838;
+}
+
+
+/* FONDO GENERAL */
+
+body.tema-oscuro,
+body.tema-oscuro ion-app,
+body.tema-oscuro ion-router-outlet {
+  background: var(--explorard-fondo) !important;
+}
+
+
+/* ION CONTENT */
+
+body.tema-oscuro ion-content {
+  --background: var(--explorard-fondo) !important;
+  --color: var(--explorard-texto) !important;
+}
+
+
+/* TOOLBAR / HEADER */
+
+body.tema-oscuro ion-header,
+body.tema-oscuro ion-toolbar {
+  --background: #0b1838 !important;
+  --color: #ffffff !important;
+}
+
+
+/* TITULOS Y TEXTOS COMUNES */
+
+body.tema-oscuro h1,
+body.tema-oscuro h2,
+body.tema-oscuro h3,
+body.tema-oscuro h4,
+body.tema-oscuro strong {
+  color: var(--explorard-texto);
+}
+
+body.tema-oscuro p,
+body.tema-oscuro span,
+body.tema-oscuro small {
+  color: var(--explorard-texto-secundario);
+}
+
+
+/* CARDS */
+
+body.tema-oscuro ion-card,
+body.tema-oscuro .info-card,
+body.tema-oscuro .mapa-info,
+body.tema-oscuro .geocerca-card,
+body.tema-oscuro .informacion-card {
+  background: var(--explorard-card) !important;
+  color: var(--explorard-texto) !important;
+}
+
+
+/* LISTAS */
+
+body.tema-oscuro ion-list {
+  background: transparent !important;
+}
+
+body.tema-oscuro ion-item {
+  --background: var(--explorard-card) !important;
+  --color: var(--explorard-texto) !important;
+  --border-color: var(--explorard-borde) !important;
+}
+
+
+/* LABELS */
+
+body.tema-oscuro ion-label {
+  color: var(--explorard-texto) !important;
+}
+
+body.tema-oscuro ion-label h2,
+body.tema-oscuro ion-label h3 {
+  color: var(--explorard-texto) !important;
+}
+
+body.tema-oscuro ion-label p {
+  color: var(--explorard-texto-secundario) !important;
+}
+
+
+/* INPUTS */
+
+body.tema-oscuro ion-input,
+body.tema-oscuro ion-textarea,
+body.tema-oscuro ion-searchbar {
+  --background: var(--explorard-card) !important;
+  --color: var(--explorard-texto) !important;
+  --placeholder-color: #9ca3af !important;
+}
+
+
+/* SEGMENTOS / BOTONES SECUNDARIOS */
+
+body.tema-oscuro ion-segment {
+  --background: var(--explorard-fondo-secundario) !important;
+}
+
+body.tema-oscuro ion-segment-button {
+  --color: var(--explorard-texto-secundario) !important;
+  --color-checked: #ffffff !important;
+}
+
+
+/* MENU DE TABS */
+
+body.tema-oscuro ion-tab-bar {
+  --background: #0f172a !important;
+  --color: #94a3b8 !important;
+  --color-selected: #f68121 !important;
+  border-top-color: #374151 !important;
+}
+
+body.tema-oscuro ion-tab-button {
+  --color: #94a3b8 !important;
+  --color-selected: #f68121 !important;
+}
+
+
+/* BADGES */
+
+body.tema-oscuro ion-badge {
+  --background: #374151;
+  --color: #ffffff;
+}
+
+
+/* MODALES / ALERTAS */
+
+body.tema-oscuro ion-modal {
+  --background: var(--explorard-fondo) !important;
+}
+
+
+/* BOTONES */
+
+body.tema-oscuro ion-button {
+  --color: #ffffff;
+}
+
+
+/* EXPLORARD - CLASES PERSONALIZADAS */
+
+body.tema-oscuro .perfil-header,
+body.tema-oscuro .mapa-header,
+body.tema-oscuro .config-header,
+body.tema-oscuro .explorar-header,
+body.tema-oscuro .inicio-header {
+  background: var(--explorard-fondo) !important;
+}
+
+body.tema-oscuro .resumen,
+body.tema-oscuro .lista-opciones,
+body.tema-oscuro .lista-configuracion {
+  background: transparent !important;
+}
+
+
+/* SECCIONES */
+
+body.tema-oscuro .seccion-titulo {
+  color: #aab4c3 !important;
+}
+
+
+/* MAPA */
+
+body.tema-oscuro .mapa-container {
+  background: #1f2937 !important;
+}
+
+
+/* MENSAJES */
+
+body.tema-oscuro .mensaje-ubicacion {
+  background: #422006 !important;
+  color: #fbbf24 !important;
+}
+
+body.tema-oscuro .mensaje-ubicacion.exito {
+  background: #14351f !important;
+  color: #86efac !important;
+}
+
+
+/* GEOCERCA */
+
+body.tema-oscuro .geocerca-destino,
+body.tema-oscuro .geocerca-dato,
+body.tema-oscuro .geocerca-estado {
+  background: #374151 !important;
+}
+
+body.tema-oscuro .geocerca-destino strong,
+body.tema-oscuro .geocerca-dato strong {
+  color: #ffffff !important;
+}
+
+body.tema-oscuro .geocerca-dentro {
+  background: #14351f !important;
+  color: #86efac !important;
+}
+
+body.tema-oscuro .geocerca-fuera {
+  background: #422006 !important;
+  color: #fbbf24 !important;
+}
+
+
+/* FAVORITOS */
+
+body.tema-oscuro .favorito-card,
+body.tema-oscuro .favorito-item {
+  background: #1f2937 !important;
+}
+
+
+/* SCROLL */
+
+body.tema-oscuro ::-webkit-scrollbar {
+  width: 7px;
+}
+
+body.tema-oscuro ::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+body.tema-oscuro ::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 10px;
+}
+
+/* TEXTOS AZULES / BLANCOS EN MODO OSCURO */
+
+body.tema-oscuro {
+
+  /* Titulos principales */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #ffffff !important;
+  }
+
+  /* Textos principales de la aplicacion */
+  .mapa-header h1,
+  .perfil-header h1,
+  .config-header h1,
+  .inicio-header h1,
+  .explorar-header h1,
+  .datos-usuario h1,
+  .info-text strong,
+  .info-texto h2,
+  .informacion-texto h2,
+  .geocerca-titulo h2,
+  .geocerca-destino strong,
+  .geocerca-dato strong,
+  .titulo-bluetooth strong,
+  .titulo-seccion,
+  .card-title,
+  .card-titulo {
+    color: #ffffff !important;
+  }
+
+  /* Textos de las opciones del Perfil */
+  .lista-opciones ion-label h2,
+  .lista-opciones ion-label h3,
+  .lista-configuracion ion-label h2,
+  .lista-configuracion ion-label h3 {
+    color: #ffffff !important;
+  }
+
+  /* Textos dentro de tarjetas */
+  ion-card h1,
+  ion-card h2,
+  ion-card h3,
+  ion-card h4,
+  ion-card strong {
+    color: #ffffff !important;
+  }
+
+  /* Ionic labels */
+  ion-label {
+    color: #ffffff !important;
+  }
+
+  /* Títulos de Ionic */
+  ion-title {
+    color: #ffffff !important;
+  }
+
+  /* Texto de los items */
+  ion-item {
+    --color: #ffffff !important;
+  }
+
+  /* Inputs */
+  ion-input,
+  ion-textarea {
+    --color: #ffffff !important;
+  }
+
+  /* Texto secundario */
+  p,
+  span,
+  small {
+    color: #aab4c3;
+  }
+
+  /* Mantener blanco en textos que son titulos */
+  .seccion-titulo span,
+  .etiqueta {
+    color: #ffffff !important;
+  }
+
+  /* La etiqueta naranja de ExploraRD se mantiene naranja */
+  .etiqueta {
+    color: #f68121 !important;
+  }
+
+}
+
+/* CATEGORIAS - MODO OSCURO */
+
+body.tema-oscuro {
+
+  /* Botones de categorias */
+  .categoria-btn,
+  .categoria-button,
+  .chip-categoria,
+  ion-chip {
+    --background: #1f2937 !important;
+    --color: #ffffff !important;
+
+    background: #1f2937 !important;
+    color: #ffffff !important;
+
+    border-color: #374151 !important;
+  }
+
+  /* Categoria seleccionada */
+  .categoria-btn.activa,
+  .categoria-btn.seleccionada,
+  .categoria-button.activa,
+  .categoria-button.seleccionada,
+  .chip-categoria.activa,
+  .chip-categoria.seleccionada {
+    --background: #0b1838 !important;
+    --color: #ffffff !important;
+
+    background: #0b1838 !important;
+    color: #ffffff !important;
+  }
+
+  /* Si las categorias son ion-button */
+  ion-button.categoria-btn {
+    --background: #1f2937 !important;
+    --color: #ffffff !important;
+  }
+
+  ion-button.categoria-btn.activa,
+  ion-button.categoria-btn.seleccionada {
+    --background: #0b1838 !important;
+    --color: #ffffff !important;
+  }
+
+}
+
+/* RESUMEN DEL PERFIL - MODO OSCURO */
+
+body.tema-oscuro {
+
+  .resumen-item strong {
+    color: #ffffff !important;
+  }
+
+  .resumen-item span {
+    color: #aab4c3 !important;
+  }
+
+  .resumen .separador {
+    background: #64748b !important;
+  }
+
+}

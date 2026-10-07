@@ -1,0 +1,238 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- PULL TO REFRESH -->
+
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="refrescarFavoritos($event)"
+  >
+
+    <ion-refresher-content
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <!-- ENCABEZADO -->
+
+  <div class="favoritos-header">
+
+    <span class="etiqueta">
+      MIS DESTINOS
+    </span>
+
+    <h1>
+      Favoritos
+    </h1>
+
+    <p>
+      Guarda los lugares que quieres visitar
+      y tenlos siempre a mano.
+    </p>
+
+  </div>
+
+
+  <!-- CARGANDO -->
+
+  <div
+    class="estado-cargando"
+    *ngIf="cargando"
+  >
+
+    <ion-spinner name="crescent"></ion-spinner>
+
+    <p>
+      Cargando tus favoritos...
+    </p>
+
+  </div>
+
+
+  <!-- SIN FAVORITOS -->
+
+  <div
+    class="estado-vacio"
+    *ngIf="!cargando && favoritos.length === 0"
+  >
+
+    <div class="icono-vacio">
+
+      <ion-icon
+        name="heart-outline"
+      ></ion-icon>
+
+    </div>
+
+    <h2>
+      Aun no tienes favoritos
+    </h2>
+
+    <p>
+      Explora Republica Dominicana y guarda
+      los destinos que mas te interesen.
+    </p>
+
+    <ion-button
+      expand="block"
+      routerLink="/tabs/explorar"
+    >
+      Explorar destinos
+    </ion-button>
+
+  </div>
+
+  <div
+    class="contador-favoritos"
+    *ngIf="!cargando && favoritos.length > 0"
+  >
+
+    <div>
+
+      <strong>
+        {{ favoritos.length }}
+      </strong>
+
+      <span>
+        {{ favoritos.length === 1 ? 'destino guardado' : 'destinos guardados' }}
+      </span>
+
+    </div>
+
+    <ion-icon
+      name="heart"
+    ></ion-icon>
+
+  </div>
+
+
+  <!-- LISTA DE FAVORITOS -->
+
+  <div
+    class="lista-favoritos"
+    *ngIf="!cargando && favoritos.length > 0"
+  >
+
+    <ion-card
+      class="favorito-card"
+      *ngFor="let lugar of favoritos"
+    >
+
+      <!-- IMAGEN -->
+
+      <div class="imagen-container">
+
+        <img
+          [src]="lugar.imagen"
+          [alt]="lugar.nombre"
+        />
+
+        <ion-badge>
+          {{ lugar.categoria }}
+        </ion-badge>
+
+      </div>
+
+
+      <!-- INFORMACION -->
+
+      <ion-card-content>
+
+        <div class="titulo-favorito">
+
+          <div>
+
+            <h2>
+              {{ lugar.nombre }}
+            </h2>
+
+            <div class="ubicacion">
+
+              <ion-icon
+                name="location-outline"
+              ></ion-icon>
+
+              <span>
+                {{ lugar.ubicacion }}, {{ lugar.provincia }}
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="valoracion">
+
+            <ion-icon
+              name="star"
+            ></ion-icon>
+
+            <strong>
+              {{ lugar.rating }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- BOTONES -->
+
+        <div class="acciones">
+
+          <ion-button
+            expand="block"
+            [routerLink]="['/detalle-lugar', lugar.id]"
+          >
+
+            Ver destino
+
+          </ion-button>
+
+
+          <ion-button
+            fill="outline"
+            color="danger"
+            (click)="eliminarFavorito(lugar)"
+            [disabled]="eliminandoId === lugar.id"
+          >
+
+            <ion-spinner
+              *ngIf="eliminandoId === lugar.id"
+              name="crescent"
+            ></ion-spinner>
+
+            <ion-icon
+              *ngIf="eliminandoId !== lugar.id"
+              slot="start"
+              name="trash-outline"
+            ></ion-icon>
+
+            <span
+              *ngIf="eliminandoId !== lugar.id"
+            >
+              Quitar
+            </span>
+
+          </ion-button>
+
+        </div>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  </div>
+
+</ion-content>

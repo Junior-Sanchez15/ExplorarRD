@@ -1,0 +1,598 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>Mi perfil</ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+
+  <!-- ENCABEZADO DEL PERFIL -->
+
+  <section class="perfil-header">
+
+    <div class="avatar">
+
+      <ion-icon name="person-outline"></ion-icon>
+
+    </div>
+
+
+    <div class="datos-usuario">
+
+      <h1>
+        {{ nombreUsuario }}
+      </h1>
+
+      <p>
+        {{ correoUsuario }}
+      </p>
+
+      <ion-badge>
+        Explorador de RD
+      </ion-badge>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESUMEN -->
+
+  <section class="resumen">
+
+    <div class="resumen-item">
+
+      <strong>20</strong>
+
+      <span>
+        Destinos
+      </span>
+
+    </div>
+
+
+    <div class="separador"></div>
+
+
+    <div class="resumen-item">
+
+      <strong>5</strong>
+
+      <span>
+        Categorias
+      </span>
+
+    </div>
+
+
+    <div class="separador"></div>
+
+
+    <div class="resumen-item">
+
+      <strong>RD</strong>
+
+      <span>
+        Pais
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- CONFIGURACION -->
+
+  <div class="seccion-titulo">
+
+    <span>
+      CONFIGURACION
+    </span>
+
+  </div>
+
+
+  <ion-list class="lista-opciones">
+
+
+    <!-- FAVORITOS -->
+
+    <ion-item
+      button
+      detail="false"
+      routerLink="/tabs/favoritos"
+    >
+
+      <div
+        class="icono-opcion favorito"
+        slot="start"
+      >
+
+        <ion-icon
+          name="heart-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Mis favoritos
+        </h2>
+
+        <p>
+          Consulta tus destinos guardados
+        </p>
+
+      </ion-label>
+
+
+      <ion-icon
+        slot="end"
+        name="chevron-forward-outline"
+      ></ion-icon>
+
+    </ion-item>
+
+
+    <!-- UBICACION -->
+
+    <ion-item
+      button
+      detail="false"
+    >
+
+      <div
+        class="icono-opcion ubicacion"
+        slot="start"
+      >
+
+        <ion-icon
+          name="location-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Ubicacion
+        </h2>
+
+        <p>
+          {{ ubicacionActiva
+            ? 'Ubicacion activada'
+            : 'Activar ubicacion para explorar'
+          }}
+        </p>
+
+      </ion-label>
+
+
+      <ion-badge
+        slot="end"
+        [class.activo]="ubicacionActiva"
+      >
+
+        {{ ubicacionActiva
+          ? 'Activa'
+          : 'Inactiva'
+        }}
+
+      </ion-badge>
+
+    </ion-item>
+
+
+    <!-- CONECTIVIDAD -->
+
+    <ion-item
+      button
+      detail="false"
+    >
+
+      <div
+        class="icono-opcion conexion"
+        slot="start"
+      >
+
+        <ion-icon
+          name="wifi-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Conectividad
+        </h2>
+
+        <p>
+          {{ conexionActiva
+            ? 'Conectado a Internet'
+            : 'Sin conexion'
+          }}
+        </p>
+
+        <small *ngIf="conexionActiva">
+          {{ tipoConexion }}
+        </small>
+
+      </ion-label>
+
+
+      <ion-badge
+        class="estado-conexion"
+        [class.sin-conexion]="!conexionActiva"
+        slot="end"
+      >
+
+        {{ conexionActiva
+          ? 'Online'
+          : 'Offline'
+        }}
+
+      </ion-badge>
+
+    </ion-item>
+
+
+    <!-- BLUETOOTH -->
+
+    <ion-item
+      button
+      detail="false"
+      (click)="activarBluetooth()"
+    >
+
+      <div
+        class="icono-opcion bluetooth"
+        slot="start"
+      >
+
+        <ion-icon
+          name="bluetooth-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Bluetooth
+        </h2>
+
+
+        <!-- Estado normal -->
+
+        <p *ngIf="!escaneandoBluetooth">
+
+          {{ bluetoothActivo
+            ? 'Buscar dispositivos cercanos'
+            : 'Activar Bluetooth y buscar dispositivos'
+          }}
+
+        </p>
+
+
+        <!-- Mientras esta buscando -->
+
+        <p *ngIf="escaneandoBluetooth">
+
+          Buscando dispositivos...
+
+        </p>
+
+      </ion-label>
+
+
+      <!-- Estado Bluetooth -->
+
+      <ion-badge
+        slot="end"
+        [class.activo]="bluetoothActivo"
+      >
+
+        {{ escaneandoBluetooth
+          ? 'Buscando'
+          : bluetoothActivo
+            ? 'Activo'
+            : 'Inactivo'
+        }}
+
+      </ion-badge>
+
+    </ion-item>
+
+
+    <!-- DISPOSITIVOS BLUETOOTH ENCONTRADOS -->
+
+         <div
+         class="dispositivos-bluetooth"
+         *ngIf="dispositivosBluetooth.length > 0"
+        >
+        
+        <div class="titulo-bluetooth">
+          <strong>Dispositivos encontrados</strong>
+          <span>{{ dispositivosBluetooth.length }}</span>
+        </div>
+        
+        <div
+        class="dispositivo-bluetooth"
+        *ngFor="let dispositivo of dispositivosBluetooth"
+        >
+        
+        <div class="icono-dispositivo">
+          <ion-icon name="bluetooth-outline"></ion-icon>
+        </div>
+        
+        <div class="informacion-dispositivo">
+          <h3>
+        {{
+          dispositivo.device.name ||
+          dispositivo.localName ||
+          'Nombre no disponible'
+        }}
+      </h3>
+
+      <p>
+        ID:
+        {{ dispositivo.device.deviceId }}
+      </p>
+    
+    </div>
+  </div>
+</div>
+
+
+    <!-- MULTIMEDIA -->
+
+    <ion-item
+      button
+      detail="true"
+      routerLink="/tabs/multimedia"
+    >
+
+      <div
+        class="icono-opcion multimedia"
+        slot="start"
+      >
+
+        <ion-icon
+          name="musical-notes"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Multimedia
+        </h2>
+
+        <p>
+          Escucha musica y disfruta contenido audiovisual
+        </p>
+
+      </ion-label>
+
+    </ion-item>
+
+
+    <!-- SERVICIOS WEB -->
+
+    <ion-item
+      button
+      detail="true"
+      routerLink="/servicios-api"
+    >
+
+      <div
+        class="icono-opcion servicios-api"
+        slot="start"
+      >
+
+        <ion-icon
+          name="wifi-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Servicios Web
+        </h2>
+
+        <p>
+          Consulta y envia informacion mediante API REST
+        </p>
+
+      </ion-label>
+
+
+      <ion-icon
+        slot="end"
+        name="chevron-forward-outline"
+      ></ion-icon>
+
+    </ion-item>
+
+
+    <!-- CAMARA / QR -->
+
+    <ion-item
+      button
+      detail="true"
+      routerLink="/camara"
+    >
+
+      <div
+        class="icono-opcion camara"
+        slot="start"
+      >
+
+        <ion-icon
+          name="camera-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Camara / QR
+        </h2>
+
+        <p>
+          Captura imagenes y escanea codigos QR
+        </p>
+
+      </ion-label>
+
+    </ion-item>
+
+
+    <!-- CONFIGURACION -->
+
+    <ion-item
+      button
+      detail="true"
+      routerLink="/configuracion"
+    >
+
+      <div
+        class="icono-opcion configuracion"
+        slot="start"
+      >
+
+        <ion-icon
+          name="settings-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <ion-label>
+
+        <h2>
+          Configuracion
+        </h2>
+
+        <p>
+          Personaliza tu experiencia
+        </p>
+
+      </ion-label>
+
+
+      <ion-icon
+        slot="end"
+        name="chevron-forward-outline"
+      ></ion-icon>
+
+    </ion-item>
+
+
+  </ion-list>
+
+
+  <!-- INFORMACION -->
+
+  <div class="seccion-titulo">
+
+    <span>
+      INFORMACION
+    </span>
+
+  </div>
+
+
+  <ion-card class="info-card">
+
+    <ion-card-content>
+
+      <div class="info-icon">
+
+        <ion-icon
+          name="information-circle-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <div class="info-texto">
+
+        <h2>
+          ExploraRD
+        </h2>
+
+        <p>
+          Descubre los mejores destinos,
+          experiencias y lugares de interes
+          de Republica Dominicana.
+        </p>
+
+        <span>
+          Version {{ versionApp }}
+        </span>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- CERRAR SESION -->
+
+  <div class="cerrar-sesion">
+
+    <ion-button
+      fill="clear"
+      expand="block"
+      (click)="cerrarSesion()"
+    >
+
+      <ion-icon
+        slot="start"
+        name="log-out-outline"
+      ></ion-icon>
+
+      Cerrar sesion
+
+    </ion-button>
+
+  </div>
+
+
+  <!-- PIE -->
+
+  <div class="pie">
+
+    <p>
+      ExploraRD DO
+    </p>
+
+    <span>
+      Descubre. Explora. Vive.
+    </span>
+
+  </div>
+
+
+</ion-content>

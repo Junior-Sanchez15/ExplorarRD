@@ -1,0 +1,313 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>
+      Multimedia
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+
+  <!-- ENCABEZADO -->
+
+  <div class="multimedia-header">
+
+    <div class="icono-musica">
+
+      <ion-icon
+        name="musical-notes">
+      </ion-icon>
+
+    </div>
+
+
+    <h1>
+      Sonidos de Republica Dominicana
+    </h1>
+
+
+    <p>
+      Disfruta de una experiencia musical mientras
+      descubres los destinos de ExploraRD.
+    </p>
+
+  </div>
+
+
+  <!-- REPRODUCTOR -->
+
+  <ion-card class="reproductor">
+
+    <ion-card-content>
+
+
+      <!-- PORTADA -->
+
+      <div class="portada">
+
+        <ion-icon
+          name="musical-notes">
+        </ion-icon>
+
+      </div>
+
+
+
+      <!-- INFORMACION DEL AUDIO -->
+
+      <div class="informacion-audio">
+
+        <span class="categoria-audio">
+
+          EXPERIENCIA EXPLORARD
+
+        </span>
+
+
+        <h2>
+
+          Atlas • Dominican Republic
+
+        </h2>
+
+
+        <p>
+
+          MUsica ambiental dominicana
+
+        </p>
+
+      </div>
+
+
+      <!-- PROGRESO -->
+
+      <div class="progreso-container">
+
+
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="0.1"
+          [value]="progreso"
+          (input)="cambiarProgreso($event)"
+          class="barra-progreso"
+        />
+
+
+        <!-- TIEMPOS -->
+
+        <div class="tiempos">
+
+          <span>
+            {{ tiempoActual }}
+          </span>
+
+
+          <span>
+            {{ duracion }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTROLES -->
+
+      <div class="controles">
+
+
+        <!-- DETENER -->
+
+        <ion-button
+          fill="clear"
+          class="boton-control"
+          (click)="detener()">
+
+          <ion-icon
+            slot="icon-only"
+            name="stop">
+          </ion-icon>
+
+        </ion-button>
+
+
+
+        <!-- PLAY / PAUSE -->
+
+        <ion-button
+          class="boton-play"
+          (click)="reproducirPausar()">
+
+          <ion-icon
+            slot="icon-only"
+            [name]="
+              reproduciendo
+                ? 'pause'
+                : 'play'
+            ">
+          </ion-icon>
+
+        </ion-button>
+
+
+
+        <!-- VOLUMEN -->
+
+        <ion-button
+          fill="clear"
+          class="boton-control">
+
+          <ion-icon
+            slot="icon-only"
+            name="volume-high">
+          </ion-icon>
+
+        </ion-button>
+
+      </div>
+
+
+      <!-- ESTADO -->
+
+      <div class="estado-reproduccion">
+
+        <span
+          [class.reproduciendo]="reproduciendo">
+
+          <span class="punto-estado"></span>
+
+
+          {{
+            reproduciendo
+              ? 'Reproduciendo ahora'
+              : 'Audio pausado'
+          }}
+
+        </span>
+
+      </div>
+
+
+      <!-- VOLUMEN -->
+
+      <div class="volumen">
+
+        <ion-icon
+          name="volume-high">
+        </ion-icon>
+
+
+        <ion-range
+          [min]="0"
+          [max]="100"
+          [step]="1"
+          [value]="volumen"
+          (ionInput)="cambiarVolumen($event)">
+        </ion-range>
+
+      </div>
+
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- VIDEO -->
+
+<div class="video-seccion">
+
+  <div class="video-encabezado">
+
+    <span class="video-etiqueta">
+      EXPERIENCIA VISUAL
+    </span>
+
+    <h2>
+      Descubre Republica Dominicana
+    </h2>
+
+    <p>
+      Conoce nuestros destinos a traves de contenido
+      audiovisual.
+    </p>
+
+  </div>
+
+
+  <div class="video-contenedor">
+
+    <video
+      class="video-turistico"
+      controls
+      preload="metadata"
+      playsinline>
+
+      <source
+        src="assets/video/explorard-destino.mp4"
+        type="video/mp4">
+
+      Tu navegador no soporta la reproduccion de video.
+
+    </video>
+
+  </div>
+
+
+  <div class="video-info">
+
+    <div class="video-icono">
+
+      <ion-icon
+        name="musical-notes">
+      </ion-icon>
+
+    </div>
+
+    <div>
+
+      <strong>
+        Experiencia ExploraRD
+      </strong>
+
+      <span>
+        Video turistico de Republica Dominicana
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- INFORMACION -->
+
+  <div class="informacion-multimedia">
+
+    <h2>
+      Explora mientras escuchas
+    </h2>
+
+
+    <p>
+
+      La musica forma parte de la experiencia cultural
+      de Republica Dominicana. En ExploraRD puedes
+      descubrir diferentes destinos mientras disfrutas
+      de contenido multimedia.
+
+    </p>
+
+  </div>
+
+
+</ion-content>

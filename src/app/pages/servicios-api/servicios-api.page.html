@@ -1,0 +1,529 @@
+<ion-header [translucent]="true">
+
+  <ion-toolbar>
+
+    <ion-title>
+      Servicios Web
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content
+  [fullscreen]="true"
+  class="pagina-api"
+>
+
+
+  <!-- ACTUALIZAR -->
+
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="refrescar($event)"
+  >
+
+    <ion-refresher-content
+      pullingIcon="refresh-outline"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <!-- HERO -->
+
+  <section class="hero-api">
+
+    <div class="hero-icono">
+
+      <ion-icon
+        name="server-outline"
+      >
+      </ion-icon>
+
+    </div>
+
+
+    <div class="hero-contenido">
+
+      <span class="hero-etiqueta">
+        CONECTIVIDAD
+      </span>
+
+      <h1>
+        Servicios Web
+      </h1>
+
+      <p>
+        Conecta ExploraRD con servicios
+        mediante una API REST.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ESTADO DE LA API -->
+
+  <ion-card class="estado-card">
+
+    <ion-card-content>
+
+      <div class="estado-contenido">
+
+
+        <!-- ICONO -->
+
+        <div class="estado-icono">
+
+          <ion-icon
+            name="wifi-outline"
+          >
+          </ion-icon>
+
+        </div>
+
+
+        <!-- INFORMACION -->
+
+        <div class="estado-texto">
+
+          <span class="estado-label">
+            API REST
+          </span>
+
+          <strong>
+
+            {{
+              cargando
+                ? 'Conectando...'
+                : error
+                  ? 'Servicio con problemas'
+                  : 'Servicio disponible'
+            }}
+
+          </strong>
+
+        </div>
+
+
+        <!-- ESTADO -->
+
+        <ion-badge
+          [class.estado-cargando]="cargando"
+          [class.estado-ok]="!cargando && !error"
+          [class.estado-error]="!!error"
+        >
+
+          {{
+            cargando
+              ? 'CARGANDO'
+              : error
+                ? 'ERROR'
+                : 'CONECTADO'
+          }}
+
+        </ion-badge>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- MENSAJE DE EXITO -->
+
+  <div
+    class="mensaje-exito"
+    *ngIf="mensaje"
+  >
+
+    <ion-icon
+      name="checkmark-circle-outline"
+    >
+    </ion-icon>
+
+    <span>
+      {{ mensaje }}
+    </span>
+
+  </div>
+
+
+  <!-- MENSAJE DE ERROR -->
+
+  <div
+    class="mensaje-error"
+    *ngIf="error"
+  >
+
+    <ion-icon
+      name="alert-circle-outline"
+    >
+    </ion-icon>
+
+    <span>
+      {{ error }}
+    </span>
+
+    <ion-button
+      fill="clear"
+      size="small"
+      (click)="limpiarMensajes()"
+    >
+      Cerrar
+    </ion-button>
+
+  </div>
+
+
+  <!-- API GET -->
+
+  <ion-card class="api-card get-card">
+
+    <ion-card-header>
+
+      <div class="seccion-titulo">
+
+
+        <div class="seccion-icono get">
+
+          <ion-icon
+            name="cloud-download-outline"
+          >
+          </ion-icon>
+
+        </div>
+
+
+        <div>
+
+          <ion-card-title>
+            Obtener informacion
+          </ion-card-title>
+
+          <p>
+            Consulta mediante HTTP GET
+          </p>
+
+        </div>
+
+      </div>
+
+    </ion-card-header>
+
+
+    <ion-card-content>
+
+      <div class="descripcion-bloque">
+
+        <span class="metodo-badge get-badge">
+          GET
+        </span>
+
+        <p class="descripcion-api">
+
+          Consulta informacion desde un servicio
+          REST y muestra los resultados directamente
+          en ExploraRD.
+
+        </p>
+
+      </div>
+
+
+      <ion-button
+        expand="block"
+        class="boton-principal"
+        (click)="actualizar()"
+        [disabled]="cargando"
+      >
+
+        <ion-spinner
+          *ngIf="cargando"
+          name="crescent"
+        >
+        </ion-spinner>
+
+
+        <ion-icon
+          *ngIf="!cargando"
+          slot="start"
+          name="cloud-download-outline"
+        >
+        </ion-icon>
+
+
+        <span>
+
+          {{
+            cargando
+              ? 'Consultando API...'
+              : 'Obtener datos mediante GET'
+          }}
+
+        </span>
+
+      </ion-button>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- API POST -->
+
+  <ion-card class="api-card post-card">
+
+    <ion-card-header>
+
+      <div class="seccion-titulo">
+
+
+        <div class="seccion-icono post">
+
+          <ion-icon
+            name="cloud-upload-outline"
+          >
+          </ion-icon>
+
+        </div>
+
+
+        <div>
+
+          <ion-card-title>
+            Enviar recomendacion
+          </ion-card-title>
+
+          <p>
+            Envia informacion mediante HTTP POST
+          </p>
+
+        </div>
+
+      </div>
+
+    </ion-card-header>
+
+
+    <ion-card-content>
+
+      <div class="descripcion-bloque">
+
+        <span class="metodo-badge post-badge">
+          POST
+        </span>
+
+        <p class="descripcion-api">
+
+          Registra una recomendacion turistica
+          utilizando el servicio REST.
+
+        </p>
+
+      </div>
+
+
+      <!-- TITULO -->
+
+      <ion-input
+        label="Titulo"
+        labelPlacement="stacked"
+        fill="outline"
+        placeholder="Ej. Playa Fronton"
+        [(ngModel)]="titulo"
+      >
+      </ion-input>
+
+
+      <!-- CONTENIDO -->
+
+      <ion-textarea
+        label="Descripcion"
+        labelPlacement="stacked"
+        fill="outline"
+        placeholder="Escribe una descripcion del destino..."
+        [autoGrow]="true"
+        rows="4"
+        [(ngModel)]="contenido"
+      >
+      </ion-textarea>
+
+
+      <!-- BOTON -->
+
+      <ion-button
+        expand="block"
+        class="boton-post"
+        (click)="enviarDatos()"
+        [disabled]="cargando"
+      >
+
+        <ion-icon
+          slot="start"
+          name="cloud-upload-outline"
+        >
+        </ion-icon>
+
+        <span>
+          Enviar mediante POST
+        </span>
+
+      </ion-button>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- RESULTADOS DEL SERVIDOR -->
+
+  <section class="resultados-section">
+
+
+    <!-- CABECERA -->
+
+    <div class="resultados-header">
+
+      <div>
+
+        <span class="seccion-label">
+          RESPUESTA DEL SERVIDOR
+        </span>
+
+        <h2>
+          Datos obtenidos
+        </h2>
+
+        <p>
+          Informacion recibida mediante la API REST.
+        </p>
+
+      </div>
+
+
+      <div class="contador-resultados">
+
+        <strong>
+          {{ publicaciones.length }}
+        </strong>
+
+        <span>
+          registros
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading-container"
+      *ngIf="
+        cargando &&
+        publicaciones.length === 0
+      "
+    >
+
+      <ion-spinner
+        name="crescent"
+      >
+      </ion-spinner>
+
+      <p>
+        Consultando informacion...
+      </p>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <ion-list
+      *ngIf="publicaciones.length > 0"
+      class="lista-resultados"
+    >
+
+      <ion-item
+        *ngFor="let publicacion of publicaciones"
+        lines="none"
+      >
+
+        <div class="resultado-item">
+
+
+          <!-- NUMERO -->
+
+          <div class="resultado-numero">
+
+            #{{ publicacion.id }}
+
+          </div>
+
+
+          <!-- CONTENIDO -->
+
+          <div class="resultado-contenido">
+
+            <span class="resultado-etiqueta">
+              DESTINO / INFORMACION
+            </span>
+
+            <h3>
+              {{ publicacion.titulo }}
+            </h3>
+
+            <p>
+              {{ publicacion.contenido }}
+            </p>
+
+          </div>
+
+        </div>
+
+      </ion-item>
+
+    </ion-list>
+
+
+    <!-- SIN RESULTADOS -->
+
+    <div
+      class="sin-resultados"
+      *ngIf="
+        !cargando &&
+        publicaciones.length === 0 &&
+        !error
+      "
+    >
+
+      <ion-icon
+        name="server-outline"
+      >
+      </ion-icon>
+
+      <h3>
+        No hay datos disponibles
+      </h3>
+
+      <p>
+        Presiona el boton GET para consultar
+        el servicio REST.
+      </p>
+
+    </div>
+
+  </section>
+
+
+</ion-content>

@@ -1,0 +1,529 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Camara / QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- INPUT OCULTO PARA GALERIA EN NAVEGADOR -->
+  <input
+    id="inputGaleria"
+    type="file"
+    accept="image/*"
+    hidden
+    (change)="cargarImagenDesdeArchivo($event)"
+  />
+
+
+  <!-- ENCABEZADO -->
+
+  <section class="hero-camara">
+
+    <div class="hero-icono">
+      <ion-icon name="camera-outline"></ion-icon>
+    </div>
+
+    <div class="hero-texto">
+
+      <span class="etiqueta">
+        EXPLORARD
+      </span>
+
+      <h1>
+        Captura tus momentos
+      </h1>
+
+      <p>
+        Guarda recuerdos de tus aventuras
+        por Republica Dominicana.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!--CAMARA EN VIVO-->
+
+  <section
+    class="visor-camara"
+    *ngIf="camaraActiva"
+  >
+
+    <div class="visor-superior">
+
+      <span>
+
+        <span class="indicador-en-vivo"></span>
+
+        Camara activa
+
+      </span>
+
+      <ion-button
+        fill="clear"
+        class="boton-cerrar"
+        (click)="cerrarCamara()"
+      >
+
+        <ion-icon
+          slot="icon-only"
+          name="close-outline"
+        ></ion-icon>
+
+      </ion-button>
+
+    </div>
+
+
+    <div class="video-wrapper">
+
+      <video
+        id="vistaCamara"
+        class="vista-video"
+        autoplay
+        muted
+        playsinline
+      ></video>
+
+      <div class="marco-camara">
+
+        <span
+          class="esquina esquina-superior-izquierda">
+        </span>
+
+        <span
+          class="esquina esquina-superior-derecha">
+        </span>
+
+        <span
+          class="esquina esquina-inferior-izquierda">
+        </span>
+
+        <span
+          class="esquina esquina-inferior-derecha">
+        </span>
+
+        <div class="linea-escaneo"></div>
+
+      </div>
+
+
+      <div class="mensaje-visor">
+
+        Apunta la camara hacia el destino
+
+      </div>
+
+    </div>
+
+
+    <!-- CONTROLES -->
+
+    <div class="controles-camara">
+
+      <div class="indicador-captura">
+
+        <span>
+          CAPTURAR MOMENTO
+        </span>
+
+      </div>
+
+
+      <button
+        class="boton-capturar"
+        type="button"
+        (click)="capturarFotoWeb()"
+      >
+
+        <span class="boton-capturar-interior">
+
+          <ion-icon
+            name="camera"
+          ></ion-icon>
+
+        </span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!--MENSAJE DE ERROR-->
+
+  <div
+    class="mensaje-error"
+    *ngIf="mensajeError"
+  >
+
+    <ion-icon
+      name="close-outline"
+    ></ion-icon>
+
+    <span>
+      {{ mensajeError }}
+    </span>
+
+  </div>
+
+
+  <!--PANEL PRINCIPAL-->
+
+  <section
+    class="panel-principal"
+    *ngIf="!camaraActiva && fotosCapturadas.length === 0"
+  >
+
+    <div class="icono-vista">
+
+      <ion-icon
+        name="image-outline"
+      ></ion-icon>
+
+    </div>
+
+
+    <h2>
+      ¿Listo para explorar?
+    </h2>
+
+
+    <p>
+      Utiliza la camara para capturar
+      fotografias de los lugares que visites.
+    </p>
+
+
+    <!--ABRIR CaMARA-->
+
+    <ion-button
+      expand="block"
+      class="boton-camara"
+      (click)="tomarFoto()"
+      [disabled]="procesando"
+    >
+
+      <ion-icon
+        slot="start"
+        name="camera"
+      ></ion-icon>
+
+      {{
+        procesando
+          ? 'Abriendo cámara...'
+          : 'Abrir cámara'
+      }}
+
+    </ion-button>
+
+
+    <!--SEPARADOR-->
+
+    <div class="separador">
+
+      <span>
+        O TAMBIEN PUEDES
+      </span>
+
+    </div>
+
+
+    <!--GALERIA-->
+
+    <ion-button
+      expand="block"
+      fill="outline"
+      class="boton-galeria"
+      (click)="seleccionarImagen()"
+      [disabled]="procesando"
+    >
+
+      <ion-icon
+        slot="start"
+        name="image-outline"
+      ></ion-icon>
+
+      Seleccionar de galeria
+
+    </ion-button>
+
+
+    <!--ESCANER QR-->
+
+    <ion-button
+      expand="block"
+      fill="outline"
+      class="boton-qr"
+      (click)="escanearQR()"
+      [disabled]="procesando || escaneandoQR"
+    >
+
+      <ion-icon
+        slot="start"
+        name="scan-outline"
+      ></ion-icon>
+
+      {{
+        escaneandoQR
+          ? 'Abriendo lector QR...'
+          : 'Escanear codigo QR'
+      }}
+
+    </ion-button>
+
+
+    <!--RESULTADO DEL QR-->
+
+    <div
+      class="resultado-qr"
+      *ngIf="resultadoQR"
+    >
+
+      <div class="resultado-qr-icono">
+
+        <ion-icon
+          name="scan-outline"
+        ></ion-icon>
+
+      </div>
+
+
+      <div class="resultado-qr-contenido">
+
+        <span class="etiqueta">
+          CODIGO QR DETECTADO
+        </span>
+
+        <h3>
+          Resultado del escaneo
+        </h3>
+
+        <p>
+          {{ resultadoQR }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!--GALERIA DE FOTOGRAFIAS-->
+
+  <section
+    class="foto-seccion"
+    *ngIf="fotosCapturadas.length > 0"
+  >
+
+    <!-- TITULO -->
+
+    <div class="foto-titulo">
+
+      <div>
+
+        <span class="etiqueta">
+          MOMENTOS CAPTURADOS
+        </span>
+
+        <h2>
+          Mis fotografias
+        </h2>
+
+      </div>
+
+
+      <span class="contador-fotos">
+
+        {{ fotosCapturadas.length }}
+
+      </span>
+
+    </div>
+
+
+    <!-- FOTOS -->
+
+    <div class="galeria-fotos">
+
+      <div
+        class="foto-card"
+        *ngFor="
+          let foto of fotosCapturadas;
+          let i = index
+        "
+      >
+
+        <!-- ENCABEZADO DE FOTO -->
+
+        <div class="foto-numero">
+
+          <span>
+            Foto {{ i + 1 }}
+          </span>
+
+          <span>
+            ExploraRD
+          </span>
+
+        </div>
+
+
+        <!-- IMAGEN -->
+
+        <div class="foto-preview">
+
+          <img
+            [src]="foto"
+            [alt]="'Fotografía ' + (i + 1)"
+          />
+
+        </div>
+
+
+        <!-- ACCIONES DE FOTO -->
+
+        <div class="foto-acciones">
+
+          <ion-button
+            expand="block"
+            class="boton-camara"
+            (click)="imagenCapturada = foto"
+          >
+
+            <ion-icon
+              slot="start"
+              name="image-outline"
+            ></ion-icon>
+
+            Ver fotografía
+
+          </ion-button>
+
+
+          <ion-button
+            expand="block"
+            fill="clear"
+            color="medium"
+            class="boton-eliminar"
+            (click)="
+              imagenCapturada = foto;
+              eliminarFoto()
+            "
+          >
+
+            <ion-icon
+              slot="start"
+              name="trash-outline"
+            ></ion-icon>
+
+            Eliminar
+
+          </ion-button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!--ACCIONES GENERALES-->
+
+    <div class="acciones-galeria">
+
+      <!-- TOMAR OTRA -->
+
+      <ion-button
+        expand="block"
+        class="boton-camara"
+        (click)="tomarFoto()"
+      >
+
+        <ion-icon
+          slot="start"
+          name="camera"
+        ></ion-icon>
+
+        Tomar otra fotografia
+
+      </ion-button>
+
+
+      <!-- GALERIA -->
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="boton-galeria"
+        (click)="seleccionarImagen()"
+      >
+
+        <ion-icon
+          slot="start"
+          name="image-outline"
+        ></ion-icon>
+
+        Agregar desde galeria
+
+      </ion-button>
+
+
+      <!-- ELIMINAR TODAS -->
+
+      <ion-button
+        expand="block"
+        fill="clear"
+        color="medium"
+        class="boton-eliminar"
+        (click)="eliminarTodasLasFotos()"
+      >
+
+        <ion-icon
+          slot="start"
+          name="trash-outline"
+        ></ion-icon>
+
+        Eliminar todas
+
+      </ion-button>
+
+    </div>
+
+  </section>
+
+
+  <!--INFORMACION-->
+
+  <section class="informacion-camara">
+
+    <div class="informacion-icono">
+
+      <ion-icon
+        name="camera-outline"
+      ></ion-icon>
+
+    </div>
+
+
+    <div>
+
+      <h3>
+        Explora y captura
+      </h3>
+
+      <p>
+        Conserva tus mejores momentos mientras
+        descubres los destinos turisticos de
+        Republica Dominicana.
+      </p>
+
+    </div>
+
+  </section>
+
+</ion-content>

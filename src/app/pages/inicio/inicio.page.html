@@ -1,0 +1,490 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ExploraRD</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- REFRESCAR -->
+
+  <ion-refresher
+    slot="fixed"
+    (ionRefresh)="refrescar($event)"
+  >
+
+    <ion-refresher-content
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando..."
+    >
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <!-- HERO PRINCIPAL -->
+
+  <section class="hero">
+
+    <div class="hero-overlay">
+
+      <span class="hero-etiqueta">
+        DESCUBRE
+      </span>
+
+      <h1>
+        Republica<br />
+        Dominicana DO
+      </h1>
+
+      <p>
+        Tu proxima aventura comienza aqui.
+        Descubre playas, montañas, naturaleza,
+        cultura y gastronomia.
+      </p>
+
+      <a
+        class="hero-button"
+        routerLink="/tabs/explorar"
+      >
+
+        Explorar destinos
+
+        <ion-icon
+          name="arrow-forward-outline"
+        >
+        </ion-icon>
+
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ESTADISTICAS -->
+
+  <section class="estadisticas">
+
+    <div class="estadistica">
+
+      <strong>
+        {{ lugares.length }}
+      </strong>
+
+      <span>
+        Destinos
+      </span>
+
+    </div>
+
+
+    <div class="estadistica">
+
+      <strong>
+        {{ categorias.length }}
+      </strong>
+
+      <span>
+        Categorías
+      </span>
+
+    </div>
+
+
+    <div class="estadistica">
+
+      <strong>
+        100%
+      </strong>
+
+      <span>
+        Experiencias
+      </span>
+
+    </div>
+
+  </section>
+
+
+  <!-- DESTINOS DESTACADOS -->
+
+  <section class="destacados-section">
+
+    <div class="section-header">
+
+      <div>
+
+        <span class="section-etiqueta">
+          INSPIRACION
+        </span>
+
+        <h2>
+          Destinos destacados
+        </h2>
+
+        <p>
+          Desliza para descubrir mas lugares
+        </p>
+
+      </div>
+
+
+      <a
+        class="ver-todos"
+        routerLink="/tabs/explorar"
+      >
+
+        Ver todos
+
+        <ion-icon
+          name="arrow-forward-outline"
+        >
+        </ion-icon>
+
+      </a>
+
+    </div>
+
+
+    <!-- CARRUSEL SWIPE -->
+
+    <div
+      class="destinos-carousel"
+
+      (touchstart)="iniciarSwipe($event)"
+
+      (touchmove)="moverSwipe($event)"
+
+      (touchend)="finalizarSwipe($event)"
+    >
+
+
+      <div
+        class="destino-card"
+
+        *ngIf="
+          destinosDestacados.length > 0
+        "
+
+        [routerLink]="[
+          '/detalle-lugar',
+          destinosDestacados[destinoActual].id
+        ]"
+      >
+
+        <div class="imagen-wrapper">
+
+          <img
+            [src]="
+              destinosDestacados[
+                destinoActual
+              ].imagen
+            "
+
+            [alt]="
+              destinosDestacados[
+                destinoActual
+              ].nombre
+            "
+          />
+
+
+          <div class="rating-badge">
+
+            <ion-icon
+              name="star"
+            >
+            </ion-icon>
+
+            {{
+              destinosDestacados[
+                destinoActual
+              ].rating
+            }}
+
+          </div>
+
+        </div>
+
+
+        <div class="destino-info">
+
+          <span class="destino-categoria">
+
+            {{
+              destinosDestacados[
+                destinoActual
+              ].categoria
+            }}
+
+          </span>
+
+
+          <h3>
+
+            {{
+              destinosDestacados[
+                destinoActual
+              ].nombre
+            }}
+
+          </h3>
+
+
+          <div class="destino-ubicacion">
+
+            <ion-icon
+              name="location-outline"
+            >
+            </ion-icon>
+
+            <span>
+
+              {{
+                destinosDestacados[
+                  destinoActual
+                ].ubicacion
+              }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INDICADORES -->
+
+      <div
+        class="carousel-indicadores"
+        *ngIf="
+          destinosDestacados.length > 1
+        "
+      >
+
+        <button
+          type="button"
+
+          *ngFor="
+            let lugar of destinosDestacados;
+            let i = index
+          "
+
+          [class.activo]="
+            i === destinoActual
+          "
+
+          (click)="seleccionarDestino(i)"
+          [attr.aria-label]="
+            'Ver ' + lugar.nombre
+          "
+        >
+        </button>
+
+      </div>
+
+
+      <!-- TEXTO DE AYUDA -->
+
+      <div class="swipe-ayuda">
+
+        <span>
+          Desliza para explorar
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- BANNER EXPLORAR -->
+
+  <section class="explorar-banner">
+
+    <div class="banner-icon">
+
+      <ion-icon
+        name="location-outline"
+      >
+      </ion-icon>
+
+    </div>
+
+
+    <div class="banner-content">
+
+      <span>
+        ¿NO SABES DONDE IR?
+      </span>
+
+      <h2>
+        Encuentra tu proximo destino
+      </h2>
+
+      <p>
+        Explora nuestros 20 lugares y descubre
+        el destino perfecto para ti.
+      </p>
+
+    </div>
+
+
+    <a
+      class="banner-button"
+      routerLink="/tabs/explorar"
+    >
+
+      Explorar
+
+      <ion-icon
+        name="arrow-forward-outline"
+      >
+      </ion-icon>
+
+    </a>
+
+  </section>
+
+
+  <!-- CATEGORIAS PREVIEW -->
+
+  <section class="categorias-preview">
+
+    <div class="section-header-simple">
+
+      <div>
+
+        <span class="section-etiqueta">
+          DESCUBRE
+        </span>
+
+        <h2>
+          Hay un lugar para todos
+        </h2>
+
+      </div>
+
+    </div>
+
+
+    <div class="categorias-grid">
+
+      <div class="categoria-box playas">
+
+        <span>🏖️</span>
+
+        <strong>
+          Playas
+        </strong>
+
+        <small>
+          Sol y mar
+        </small>
+
+      </div>
+
+
+      <div class="categoria-box montanas">
+
+        <span>🏔️</span>
+
+        <strong>
+          Montañas
+        </strong>
+
+        <small>
+          Aventura
+        </small>
+
+      </div>
+
+
+      <div class="categoria-box naturaleza">
+
+        <span>🌿</span>
+
+        <strong>
+          Naturaleza
+        </strong>
+
+        <small>
+          Explora
+        </small>
+
+      </div>
+
+
+      <div class="categoria-box cultura">
+
+        <span>🏛️</span>
+
+        <strong>
+          Cultura
+        </strong>
+
+        <small>
+          Historia
+        </small>
+
+      </div>
+
+
+      <div class="categoria-box gastronomia">
+
+        <span>🍽️</span>
+
+        <strong>
+          Gastronomia
+        </strong>
+
+        <small>
+          Sabores
+        </small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ==========================================
+       FINAL
+       ========================================== -->
+
+  <section class="final-section">
+
+    <h2>
+      Republica Dominicana te espera DO
+    </h2>
+
+    <p>
+      Descubre nuevos lugares, crea recuerdos
+      y vive experiencias inolvidables.
+    </p>
+
+    <a
+      class="final-button"
+      routerLink="/tabs/explorar"
+    >
+
+      Comenzar a explorar
+
+      <ion-icon
+        name="arrow-forward-outline"
+      >
+      </ion-icon>
+
+    </a>
+
+  </section>
+
+
+</ion-content>

@@ -1,0 +1,402 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>
+      Mapa
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <!-- ENCABEZADO -->
+
+  <div class="mapa-header">
+
+    <div>
+
+      <span class="etiqueta">
+        DESCUBRE
+      </span>
+
+      <h1>
+        Explora el mapa
+      </h1>
+
+      <p>
+        Encuentra nuestros destinos turIsticos
+        en Republica Dominicana.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- CONTENEDOR DEL MAPA -->
+
+  <div class="mapa-container">
+
+    <div id="map"></div>
+
+
+    <!-- BOTON MI UBICACION -->
+
+    <ion-button
+      class="boton-ubicacion"
+      shape="round"
+      (click)="obtenerMiUbicacion()"
+      [disabled]="cargandoUbicacion"
+    >
+
+      <ion-icon
+        slot="start"
+        name="navigate-outline"
+      ></ion-icon>
+
+
+      <ng-container *ngIf="cargandoUbicacion">
+
+        Obteniendo ubicacion...
+
+      </ng-container>
+
+
+      <ng-container *ngIf="!cargandoUbicacion">
+
+        Mi ubicacion
+
+      </ng-container>
+
+    </ion-button>
+
+  </div>
+
+
+  <!-- INFORMACION -->
+
+  <div class="mapa-info">
+
+    <div class="info-icon">
+
+      <ion-icon
+        name="location-outline"
+      ></ion-icon>
+
+    </div>
+
+
+    <div class="info-text">
+
+      <strong>
+        {{ lugares.length }} destinos disponibles
+      </strong>
+
+      <p>
+        Toca cualquier marcador para conocer
+        mas informacion sobre el lugar.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!--ESTADO GPS -->
+
+  <div
+    class="gps-estado"
+    [class.activo]="ubicacionObtenida"
+  >
+
+    <span class="gps-indicador"></span>
+
+    <span>
+
+      {{
+        ubicacionObtenida
+          ? 'Ubicacion actual detectada'
+          : 'Pulsa "Mi ubicacion" para usar tu GPS'
+      }}
+
+    </span>
+
+  </div>
+
+
+  <!-- MENSAJE DE UBICACION -->
+
+  <div
+    class="mensaje-ubicacion"
+    *ngIf="mensajeUbicacion"
+    [class.exito]="ubicacionObtenida"
+  >
+
+    {{ mensajeUbicacion }}
+
+  </div>
+
+
+  <!-- GEOCERCA -->
+
+  <section class="geocerca-card">
+
+    <!-- ENCABEZADO -->
+
+    <div class="geocerca-header">
+
+      <div class="geocerca-icono">
+
+        📍
+
+      </div>
+
+
+      <div class="geocerca-titulo">
+
+        <span class="geocerca-etiqueta">
+          SEGURIDAD Y UBICACION
+        </span>
+
+        <h2>
+          Geocerca del destino
+        </h2>
+
+        <p>
+          Comprueba si te encuentras cerca
+          del destino seleccionado.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- DESTINO SELECCIONADO -->
+
+    <div
+      class="geocerca-destino"
+      *ngIf="lugarSeleccionadoId"
+    >
+
+      <div class="geocerca-destino-icono">
+        🎯
+      </div>
+
+
+      <div class="geocerca-destino-info">
+
+        <span>
+          DESTINO MONITOREADO
+        </span>
+
+        <strong>
+
+          {{
+            lugaresService.obtenerLugarPorId(
+              lugarSeleccionadoId
+            )?.nombre || 'Destino seleccionado'
+          }}
+
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- SIN DESTINO -->
+
+    <div
+      class="geocerca-sin-destino"
+      *ngIf="!lugarSeleccionadoId"
+    >
+
+      <div class="sin-destino-icono">
+        ℹ️
+      </div>
+
+      <p>
+        Selecciona un destino desde la seccion
+        de lugares para activar su geocerca.
+      </p>
+
+    </div>
+
+
+    <!-- INFORMACION DE RADIO -->
+
+    <div class="geocerca-configuracion">
+
+      <div class="config-item">
+
+        <span class="config-label">
+          RADIO
+        </span>
+
+        <strong>
+          {{ radioGeocerca }} m
+        </strong>
+
+      </div>
+
+
+      <div class="config-item">
+
+        <span class="config-label">
+          ESTADO
+        </span>
+
+        <strong
+          [class.estado-activo]="geocercaActiva"
+          [class.estado-inactivo]="!geocercaActiva"
+        >
+
+          {{
+            geocercaActiva
+              ? 'ACTIVA'
+              : 'INACTIVA'
+          }}
+
+        </strong>
+
+      </div>
+
+
+      <div
+        class="config-item"
+        *ngIf="distanciaGeocerca !== null"
+      >
+
+        <span class="config-label">
+          DISTANCIA
+        </span>
+
+        <strong>
+          {{ distanciaGeocerca < 1000
+              ? distanciaGeocerca + ' m'
+              : (distanciaGeocerca / 1000).toFixed(2) + ' km'
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ESTADO DE LA GEOCERCA -->
+
+    <div
+      class="geocerca-estado"
+      [class.dentro]="dentroGeocerca && geocercaActiva"
+      [class.fuera]="!dentroGeocerca && geocercaActiva"
+      [class.inactiva]="!geocercaActiva"
+    >
+
+      <div class="estado-geocerca-icono">
+
+        {{
+          !geocercaActiva
+            ? '⭕'
+            : dentroGeocerca
+              ? '🟢'
+              : '🔵'
+        }}
+
+      </div>
+
+
+      <div class="estado-geocerca-texto">
+
+        <span>
+
+          {{
+            !geocercaActiva
+              ? 'GEOCERCA INACTIVA'
+              : dentroGeocerca
+                ? 'DENTRO DE LA GEOCERCA'
+                : 'FUERA DE LA GEOCERCA'
+          }}
+
+        </span>
+
+
+        <p>
+
+          {{
+            mensajeGeocerca ||
+            'Activa la geocerca para comenzar a comprobar tu distancia.'
+          }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- BOTONES DE GEOCERCA -->
+
+    <div class="geocerca-botones">
+
+
+      <!-- ACTIVAR -->
+
+      <ion-button
+        class="boton-geocerca activar"
+        expand="block"
+        (click)="activarGeocerca()"
+        [disabled]="geocercaActiva || !lugarSeleccionadoId"
+      >
+
+        <ion-icon
+          slot="start"
+          name="location-outline"
+        ></ion-icon>
+
+        Activar geocerca
+
+      </ion-button>
+
+
+      <!-- DESACTIVAR -->
+
+      <ion-button
+        class="boton-geocerca desactivar"
+        expand="block"
+        fill="outline"
+        (click)="desactivarGeocerca()"
+        [disabled]="!geocercaActiva"
+      >
+
+        Desactivar geocerca
+
+      </ion-button>
+
+    </div>
+
+
+    <!-- EXPLICACION -->
+
+    <div class="geocerca-ayuda">
+
+      <span>
+        💡
+      </span>
+
+      <p>
+        La geocerca utiliza tu ubicacion GPS para
+        determinar si estas dentro de un radio de
+        {{ radioGeocerca }} metros del destino seleccionado.
+      </p>
+
+    </div>
+
+  </section>
+
+
+</ion-content>

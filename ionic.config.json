@@ -1,0 +1,7 @@
+{
+  "name": "ExploraRD",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

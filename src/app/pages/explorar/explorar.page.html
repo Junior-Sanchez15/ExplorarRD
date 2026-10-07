@@ -1,0 +1,390 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Explorar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- ENCABEZADO -->
+
+  <div class="explorar-header">
+
+    <h1>
+      Explora Republica Dominicana DO
+    </h1>
+
+    <p>
+      Encuentra lugares increibles para visitar.
+    </p>
+
+  </div>
+
+
+  <!-- BUSCADOR -->
+
+  <div class="buscador-container">
+
+    <ion-searchbar
+      [(ngModel)]="textoBusqueda"
+      (ionInput)="buscarLugar()"
+      placeholder="Buscar lugares..."
+      [debounce]="150"
+      show-clear-button="always"
+    >
+    </ion-searchbar>
+
+  </div>
+
+
+  <!-- CATEGORIAS -->
+
+  <div class="categorias-section">
+
+    <h2>
+      Categorias
+    </h2>
+
+
+    <div class="categorias-scroll">
+
+      <ion-chip
+        *ngFor="
+          let categoria of categorias
+        "
+
+        [class.categoria-activa]="
+          categoriaSeleccionada === categoria
+        "
+
+        (click)="
+          seleccionarCategoria(categoria)
+        "
+      >
+
+        <ion-label>
+          {{ categoria }}
+        </ion-label>
+
+      </ion-chip>
+
+    </div>
+
+  </div>
+
+
+  <!-- SWIPE DE DESTINOS -->
+
+  <section
+    class="swipe-explorar"
+    *ngIf="destinoSwipe"
+  >
+
+    <div class="swipe-header">
+
+      <div>
+
+        <span class="swipe-etiqueta">
+          DESCUBRE
+        </span>
+
+        <h2>
+          Explora rapidamente
+        </h2>
+
+      </div>
+
+      <span class="swipe-contador">
+
+        {{ indiceSwipe + 1 }}
+        /
+        {{ lugaresFiltrados.length }}
+
+      </span>
+
+    </div>
+
+
+    <!-- TARJETA SWIPE -->
+
+    <div
+      class="swipe-card"
+
+      (touchstart)="
+        iniciarSwipe($event)
+      "
+
+      (touchmove)="
+        moverSwipe($event)
+      "
+
+      (touchend)="
+        finalizarSwipe($event)
+      "
+
+      [routerLink]="[
+        '/detalle-lugar',
+        destinoSwipe.id
+      ]"
+    >
+
+      <div class="swipe-imagen">
+
+        <img
+          [src]="destinoSwipe.imagen"
+          [alt]="destinoSwipe.nombre"
+        />
+
+
+        <div class="swipe-rating">
+
+          <ion-icon
+            name="star"
+          >
+          </ion-icon>
+
+          {{ destinoSwipe.rating }}
+
+        </div>
+
+      </div>
+
+
+      <div class="swipe-info">
+
+        <span class="swipe-categoria">
+
+          {{ destinoSwipe.categoria }}
+
+        </span>
+
+
+        <h3>
+
+          {{ destinoSwipe.nombre }}
+
+        </h3>
+
+
+        <div class="swipe-ubicacion">
+
+          <ion-icon
+            name="location-outline"
+          >
+          </ion-icon>
+
+          <span>
+
+            {{ destinoSwipe.ubicacion }},
+            {{ destinoSwipe.provincia }}
+
+          </span>
+
+        </div>
+
+
+        <div class="swipe-indicacion">
+
+          <span>
+            Desliza para descubrir 
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- INDICADORES -->
+
+    <div class="swipe-indicadores">
+
+      <button
+        type="button"
+
+        *ngFor="
+          let lugar of lugaresFiltrados;
+          let i = index
+        "
+
+        [class.activo]="
+          i === indiceSwipe
+        "
+
+        [class.muchos]="
+          lugaresFiltrados.length > 8
+        "
+
+        (click)="
+          seleccionarDestino(i)
+        "
+
+        [attr.aria-label]="
+          'Ver ' + lugar.nombre
+        "
+      >
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- RESULTADOS -->
+
+  <div class="resultados-section">
+
+    <div class="resultados-header">
+
+      <h2>
+        Lugares
+      </h2>
+
+      <span>
+
+        {{ lugaresFiltrados.length }}
+
+        {{
+          lugaresFiltrados.length === 1
+            ? 'lugar'
+            : 'lugares'
+        }}
+
+      </span>
+
+    </div>
+
+
+    <!-- LISTA -->
+
+    <div class="lugares-lista">
+
+      <div
+        class="lugar-card"
+
+        *ngFor="
+          let lugar of lugaresFiltrados
+        "
+
+        [routerLink]="[
+          '/detalle-lugar',
+          lugar.id
+        ]"
+      >
+
+        <!-- IMAGEN -->
+
+        <img
+          class="lugar-imagen"
+          [src]="lugar.imagen"
+          [alt]="lugar.nombre"
+        />
+
+
+        <!-- INFORMACION -->
+
+        <div class="lugar-info">
+
+          <div class="lugar-categoria">
+
+            {{ lugar.categoria }}
+
+          </div>
+
+
+          <h3>
+
+            {{ lugar.nombre }}
+
+          </h3>
+
+
+          <div class="lugar-ubicacion">
+
+            <ion-icon
+              name="location-outline"
+            >
+            </ion-icon>
+
+            <span>
+
+              {{ lugar.ubicacion }},
+              {{ lugar.provincia }}
+
+            </span>
+
+          </div>
+
+
+          <div class="lugar-footer">
+
+            <span class="rating">
+
+              <ion-icon
+                name="star"
+              >
+              </ion-icon>
+
+              {{ lugar.rating }}
+
+            </span>
+
+
+            <span class="ver-detalle">
+
+              Ver detalle
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- SIN RESULTADOS -->
+
+    <div
+      class="sin-resultados"
+
+      *ngIf="
+        lugaresFiltrados.length === 0
+      "
+    >
+
+      <ion-icon
+        name="close-circle-outline"
+      >
+      </ion-icon>
+
+
+      <h2>
+        No encontramos lugares
+      </h2>
+
+
+      <p>
+        Intenta buscar otro destino
+        o selecciona otra categoria.
+      </p>
+
+
+      <button
+        type="button"
+        (click)="limpiarBusqueda()"
+      >
+
+        Mostrar todos
+
+      </button>
+
+    </div>
+
+  </div>
+
+</ion-content>

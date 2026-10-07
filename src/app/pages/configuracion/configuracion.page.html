@@ -1,0 +1,252 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-button
+      slot="start"
+      fill="clear"
+      class="boton-volver"
+      (click)="volver()"
+    >
+      <ion-icon
+        slot="icon-only"
+        name="chevron-back-outline"
+      ></ion-icon>
+    </ion-button>
+
+    <ion-title>
+      Configuracion
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+  <!-- ENCABEZADO -->
+
+  <section class="config-header">
+
+    <div class="icono-header">
+
+      <ion-icon
+        name="information-circle-outline"
+      ></ion-icon>
+
+    </div>
+
+    <div>
+
+      <span class="etiqueta">
+        EXPLORARD
+      </span>
+
+      <h1>
+        Personaliza tu experiencia
+      </h1>
+
+      <p>
+        Ajusta las preferencias de la aplicacion
+        segun tus necesidades.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- PREFERENCIA -->
+
+  <div class="seccion-titulo">
+    PREFERENCIAS
+  </div>
+
+
+  <ion-list class="lista-configuracion">
+
+    <!-- NOTIFICACIONES -->
+
+    <ion-item>
+
+      <div
+        class="icono-opcion notificaciones"
+        slot="start"
+      >
+
+        <ion-icon
+          name="notifications-outline"
+        ></ion-icon>
+
+      </div>
+
+      <ion-label>
+
+        <h2>
+          Notificaciones
+        </h2>
+
+        <p>
+          Recibir avisos y novedades de ExploraRD
+        </p>
+
+      </ion-label>
+
+      <ion-toggle
+        slot="end"
+        [(ngModel)]="notificacionesActivas"
+        (ionChange)="cambiarNotificaciones()"
+      >
+      </ion-toggle>
+
+    </ion-item>
+
+
+    <!-- MODO OSCURO -->
+
+    <ion-item>
+
+      <div
+        class="icono-opcion oscuro"
+        slot="start"
+      >
+
+        <ion-icon
+          name="moon-outline"
+        ></ion-icon>
+
+      </div>
+
+      <ion-label>
+
+        <h2>
+          Modo oscuro
+        </h2>
+
+        <p>
+          Cambiar la apariencia de la aplicacion
+        </p>
+
+      </ion-label>
+
+      <ion-toggle
+        slot="end"
+        [(ngModel)]="modoOscuro"
+        (ionChange)="cambiarModoOscuro()"
+      >
+      </ion-toggle>
+
+    </ion-item>
+
+
+    <!-- UBICACION -->
+
+    <ion-item
+      button
+      detail="true"
+      (click)="abrirMapa()"
+    >
+
+      <div
+        class="icono-opcion ubicacion"
+        slot="start"
+      >
+
+        <ion-icon
+          name="location-outline"
+        ></ion-icon>
+
+      </div>
+
+      <ion-label>
+
+        <h2>
+          Ubicacion
+        </h2>
+
+        <p>
+          Abrir el mapa y gestionar tu ubicacion
+        </p>
+
+      </ion-label>
+
+    </ion-item>
+
+  </ion-list>
+
+
+  <!-- INFORMACION -->
+
+  <div class="seccion-titulo">
+    INFORMACION
+  </div>
+
+  <ion-card class="informacion-card">
+
+    <ion-card-content>
+
+      <div class="informacion-icono">
+
+        <ion-icon
+          name="information-circle-outline"
+        ></ion-icon>
+
+      </div>
+
+      <div class="informacion-texto">
+
+        <h2>
+          ExploraRD
+        </h2>
+
+        <p>
+          Descubre los mejores destinos,
+          experiencias y lugares de interes
+          de Republica Dominicana.
+        </p>
+
+        <ion-note>
+          Version 1.0.0
+        </ion-note>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+
+  <!-- RESTABLECER -->
+
+  <div class="restablecer">
+
+    <ion-button
+      fill="clear"
+      expand="block"
+      (click)="restablecerPreferencias()"
+    >
+
+      <ion-icon
+        slot="start"
+        name="refresh-outline"
+      ></ion-icon>
+
+      Restablecer preferencias
+
+    </ion-button>
+
+  </div>
+
+
+  <div class="pie-configuracion">
+
+    <strong>
+      ExploraRD DO
+    </strong>
+
+    <span>
+      Descubre. Explora. Vive.
+    </span>
+
+  </div>
+
+</ion-content>

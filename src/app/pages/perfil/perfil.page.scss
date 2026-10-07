@@ -1,0 +1,650 @@
+/* FONDO GENERAL */
+
+ion-content {
+  --background: #f4f7fb;
+}
+
+
+/* BARRA SUPERIOR */
+
+ion-toolbar {
+  --background: #0b1838;
+  --color: #ffffff;
+}
+
+
+/* ENCABEZADO DEL PERFIL */
+
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 30px 20px 24px;
+
+  background: #ffffff;
+}
+
+
+.avatar {
+  width: 76px;
+  height: 76px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #0b1838;
+
+  box-shadow:
+    0 8px 22px rgba(11, 24, 56, 0.18);
+}
+
+
+.avatar ion-icon {
+  font-size: 38px;
+  color: #ffffff;
+}
+
+
+.datos-usuario {
+  min-width: 0;
+}
+
+
+.datos-usuario h1 {
+  margin: 0 0 5px;
+
+  color: #0b1838;
+
+  font-size: 25px;
+  font-weight: 800;
+}
+
+
+.datos-usuario p {
+  margin: 0 0 9px;
+
+  color: #667085;
+
+  font-size: 13px;
+}
+
+
+.datos-usuario ion-badge {
+  --background: #fff3e8;
+  --color: #f68121;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+/* RESUMEN */
+
+.resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  margin: 0 20px 28px;
+  padding: 18px 10px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 22px rgba(11, 24, 56, 0.07);
+}
+
+
+.resumen-item {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 4px;
+
+  min-width: 80px;
+}
+
+
+.resumen-item strong {
+  color: #0b1838;
+
+  font-size: 20px;
+  font-weight: 800;
+}
+
+
+.resumen-item span {
+  color: #667085;
+
+  font-size: 11px;
+}
+
+
+.separador {
+  width: 1px;
+  height: 35px;
+
+  background: #e5e7eb;
+}
+
+
+/* TITULOS DE SECCION */
+
+.seccion-titulo {
+  padding: 0 20px 10px;
+}
+
+
+.seccion-titulo span {
+  color: #667085;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* LISTA DE OPCIONES */
+
+.lista-opciones {
+  margin: 0 20px 28px;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 22px rgba(11, 24, 56, 0.07);
+}
+
+
+.lista-opciones ion-item {
+  --background: #ffffff;
+  --border-color: #edf0f5;
+
+  --padding-start: 14px;
+  --inner-padding-end: 14px;
+
+  min-height: 76px;
+}
+
+
+.lista-opciones ion-item:last-child {
+  --border-width: 0;
+}
+
+
+.lista-opciones ion-label {
+  margin: 12px 0;
+}
+
+
+.lista-opciones ion-label h2 {
+  margin: 0 0 4px;
+
+  color: #0b1838;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+
+.lista-opciones ion-label p {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+
+.lista-opciones > ion-item > ion-icon[slot="end"] {
+  color: #98a2b3;
+
+  font-size: 19px;
+}
+
+
+/* ICONOS DE LAS OPCIONES */
+
+.icono-opcion {
+  width: 42px;
+  height: 42px;
+
+  margin-right: 4px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+}
+
+
+.icono-opcion ion-icon {
+  font-size: 22px;
+}
+
+
+/* FAVORITOS */
+
+.icono-opcion.favorito {
+  background: #fff0f1;
+}
+
+
+.icono-opcion.favorito ion-icon {
+  color: #dc3545 !important;
+}
+
+
+/* UBICACION */
+
+.icono-opcion.ubicacion {
+  background: #fff3e8;
+}
+
+
+.icono-opcion.ubicacion ion-icon {
+  color: #f68121 !important;
+}
+
+
+/* CONECTIVIDAD */
+
+.icono-opcion.conexion {
+  background: #edf7f0;
+}
+
+
+.icono-opcion.conexion ion-icon {
+  color: #198754 !important;
+}
+
+
+/* BLUETOOTH */
+
+.icono-opcion.bluetooth {
+  background: #eef4ff;
+}
+
+
+.icono-opcion.bluetooth ion-icon {
+  color: #2563eb !important;
+}
+
+
+/* MULTIMEDIA */
+
+.icono-opcion.multimedia {
+  background: #fff0e3;
+}
+
+
+.icono-opcion.multimedia ion-icon {
+  color: #f68121 !important;
+}
+
+
+/* SERVICIOS WEB */
+
+.icono-opcion.servicios-api {
+  background: #eef4ff;
+}
+
+
+.icono-opcion.servicios-api ion-icon {
+  color: #2563eb !important;
+}
+
+
+/* CAMARA / QR */
+
+.icono-opcion.camara {
+  background: #edf8ec;
+}
+
+
+.icono-opcion.camara ion-icon {
+  color: #14ae0f !important;
+}
+
+
+/* CONFIGURACION */
+
+.icono-opcion.configuracion {
+  background: #f1f3f5;
+}
+
+
+.icono-opcion.configuracion ion-icon {
+  color: #475467 !important;
+}
+
+
+/* ESTADOS */
+
+.lista-opciones ion-badge {
+  --background: #edf7f0;
+  --color: #198754;
+
+  padding: 6px 9px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.lista-opciones ion-badge:not(.activo) {
+  --background: #f1f3f5;
+  --color: #667085;
+}
+
+
+.lista-opciones ion-badge.sin-conexion {
+  --background: #fff0f1;
+  --color: #dc3545;
+}
+
+
+/* TARJETA DE INFORMACION */
+
+.info-card {
+  margin: 0 20px 20px;
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 6px 22px rgba(11, 24, 56, 0.07);
+}
+
+
+.info-card ion-card-content {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  padding: 20px;
+}
+
+
+.info-icon {
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #eef2ff;
+}
+
+
+.info-icon ion-icon {
+  color: #0b1838;
+
+  font-size: 24px;
+}
+
+
+.info-texto h2 {
+  margin: 0 0 6px;
+
+  color: #0b1838;
+
+  font-size: 17px;
+  font-weight: 800;
+}
+
+
+.info-texto p {
+  margin: 0 0 8px;
+
+  color: #667085;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+.info-texto span {
+  color: #98a2b3;
+
+  font-size: 11px;
+}
+
+
+/* CERRAR SESION */
+
+.cerrar-sesion {
+  padding: 0 20px;
+}
+
+
+.cerrar-sesion ion-button {
+  --color: #dc3545;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-transform: none;
+}
+
+
+/* PIE */
+
+.pie {
+  padding: 20px 20px 35px;
+
+  text-align: center;
+}
+
+
+.pie p {
+  margin: 0 0 4px;
+
+  color: #0b1838;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+
+.pie span {
+  color: #98a2b3;
+
+  font-size: 11px;
+}
+
+
+/* TABLET / ESCRITORIO */
+
+@media (min-width: 768px) {
+
+  .perfil-header,
+  .resumen,
+  .seccion-titulo,
+  .lista-opciones,
+  .info-card,
+  .cerrar-sesion,
+  .pie {
+    max-width: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  .perfil-header {
+    margin-top: 20px;
+
+    border-radius: 20px;
+  }
+
+
+  .resumen {
+    margin-top: 20px;
+  }
+
+}
+
+/* DISPOSITIVOS BLUETOOTH */
+
+.dispositivos-bluetooth {
+  margin: 16px 0;
+  padding: 0;
+  background: transparent;
+}
+
+.titulo-bluetooth {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 18px;
+
+  font-size: 15px;
+
+  color: var(--ion-text-color);
+}
+
+.titulo-bluetooth span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 28px;
+  height: 28px;
+
+  padding: 0 8px;
+
+  border-radius: 14px;
+
+  background: #e8f1ff;
+  color: #2563eb;
+
+  font-weight: 700;
+}
+
+.dispositivo-bluetooth {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 16px 18px;
+
+  margin-bottom: 10px;
+
+  background: var(--ion-background-color);
+
+  border-radius: 14px;
+
+  border: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+.icono-dispositivo {
+  width: 46px;
+  height: 46px;
+
+  min-width: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 14px;
+
+  border-radius: 12px;
+
+  background: #eef5ff;
+}
+
+.icono-dispositivo ion-icon {
+  font-size: 26px;
+  color: #2563eb;
+}
+
+.informacion-dispositivo {
+  flex: 1;
+  min-width: 0;
+}
+
+.informacion-dispositivo h3 {
+  margin: 0 0 5px 0;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: var(--ion-text-color);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.informacion-dispositivo p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #6b7280;
+
+  word-break: break-all;
+}
+
+
+/* MODO OSCURO */
+
+body.dark .dispositivo-bluetooth {
+  border-color: #303846;
+}
+
+body.dark .icono-dispositivo {
+  background: #1e293b;
+}
+
+body.dark .informacion-dispositivo p {
+  color: #aab4c3;
+}
+
+body.dark .titulo-bluetooth span {
+  background: #1e3a5f;
+  color: #93c5fd;
+}

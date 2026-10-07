@@ -1,0 +1,239 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-back-button
+        defaultHref="/tabs/inicio"
+      ></ion-back-button>
+
+    </ion-buttons>
+
+
+    <ion-title>
+      Detalle
+    </ion-title>
+
+
+    <ion-buttons slot="end">
+
+      <ion-button
+        (click)="compartir()"
+      >
+
+        <ion-icon
+          name="share-outline"
+        ></ion-icon>
+
+      </ion-button>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ng-container *ngIf="lugar">
+
+
+    <!-- IMAGEN -->
+
+    <div class="imagen-container">
+
+      <img
+        [src]="lugar.imagen"
+        [alt]="lugar.nombre"
+      />
+
+
+      <!-- CORAZON -->
+
+      <ion-button
+        class="boton-favorito"
+        fill="solid"
+        shape="round"
+        (click)="agregarFavorito()"
+        [disabled]="procesandoFavorito"
+      >
+
+        <ion-icon
+          [name]="esFavorito ? 'heart' : 'heart-outline'"
+        ></ion-icon>
+
+      </ion-button>
+
+    </div>
+
+
+    <!-- CONTENIDO -->
+
+    <div class="contenido">
+
+
+      <!-- CATEGORIA -->
+
+      <ion-badge>
+
+        {{ lugar.categoria }}
+
+      </ion-badge>
+
+
+      <!-- NOMBRE -->
+
+      <h1>
+
+        {{ lugar.nombre }}
+
+      </h1>
+
+
+      <!-- UBICACION -->
+
+      <div class="ubicacion">
+
+        <ion-icon
+          name="location-outline"
+        ></ion-icon>
+
+        <span>
+
+          {{ lugar.ubicacion }},
+          {{ lugar.provincia }}
+
+        </span>
+
+      </div>
+
+
+      <!-- VALORACION -->
+
+      <div class="valoracion">
+
+        <ion-icon
+          name="star"
+        ></ion-icon>
+
+        <strong>
+
+          {{ lugar.rating }}
+
+        </strong>
+
+        <span>
+          / 5.0
+        </span>
+
+      </div>
+
+
+      <!-- DESCRIPCION -->
+
+      <ion-card>
+
+        <ion-card-content>
+
+          <h2>
+            Sobre este lugar
+          </h2>
+
+          <p>
+
+            {{ lugar.descripcion }}
+
+          </p>
+
+        </ion-card-content>
+
+      </ion-card>
+
+
+      <!-- ACCIONES -->
+
+      <div class="acciones">
+
+
+        <!-- VER EN MAPA -->
+
+        <ion-button
+          expand="block"
+          (click)="verEnMapa()"
+        >
+
+          <ion-icon
+            slot="start"
+            name="location-outline"
+          ></ion-icon>
+
+          Ver en el mapa
+
+        </ion-button>
+
+
+        <!-- FAVORITO -->
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          (click)="agregarFavorito()"
+          [disabled]="procesandoFavorito"
+        >
+
+          <ion-icon
+            slot="start"
+            [name]="
+              esFavorito
+                ? 'heart'
+                : 'heart-outline'
+            "
+          ></ion-icon>
+
+
+          <span *ngIf="!esFavorito">
+
+            Agregar a favoritos
+
+          </span>
+
+
+          <span *ngIf="esFavorito">
+
+            Quitar de favoritos
+
+          </span>
+
+        </ion-button>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+  <!-- LUGAR NO ENCONTRADO -->
+
+  <div
+    class="no-encontrado"
+    *ngIf="!lugar"
+  >
+
+    <h2>
+      Lugar no encontrado
+    </h2>
+
+    <p>
+
+      No pudimos encontrar la informacion
+      de este destino.
+
+    </p>
+
+  </div>
+
+
+</ion-content>
