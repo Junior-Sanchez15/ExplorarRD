@@ -56,7 +56,7 @@ export class ExplorarPage implements OnInit {
     'Montañas',
     'Naturaleza',
     'Cultura',
-    'Gastronomia'
+    'Gastronomía'
   ];
 
   categoriaSeleccionada = 'Todos';
